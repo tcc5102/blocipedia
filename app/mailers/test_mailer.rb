@@ -4,7 +4,7 @@ class TestMailer < ApplicationMailer
   def new_user_email(user)
 
     headers["Message-ID"] = "<test/@mailtrap.io>"
-    headers["In-Reply-To"] = "<bailey/@mailtrap.io>"
+    headers["In-Reply-To"] = "<tyler/@mailtrap.io>"
     headers["References"] = "<new member/@mailtrap.io>"
 
     @user = user
