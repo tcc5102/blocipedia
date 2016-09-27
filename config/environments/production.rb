@@ -76,4 +76,15 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  config.action_mailer.default_url_options = { host: 'gentle-bastion-76477.herokuapp.com' }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => '5de3580ae2ebe1',
+    :password => '2bfca985de76ec',
+    :address => 'mailtrap.io',
+    :domain => 'mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
+  }
 end

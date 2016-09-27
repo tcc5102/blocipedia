@@ -33,7 +33,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Devise for authentication, user sign up
 gem 'devise'
 # Bootstrap
-gem 'bootstrap'
+gem 'bootstrap-sass'
 # figaro
 gem 'figaro'
 # pry
