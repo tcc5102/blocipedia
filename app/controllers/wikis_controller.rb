@@ -1,4 +1,7 @@
 class WikisController < ApplicationController
+  before_action :require_sign_in, except: [:index, :show]
+  before_action :authorize_user, except: [:index, :show]
+
   def index
     @wikis = Wiki.all
   end
@@ -12,9 +15,8 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.new
-    @wiki.title = params[:wiki][:title]
-    @wiki.body = params[:wiki][:body]
+    @wiki = wikis.build(wiki_params)
+    @wiki.user = current_user
 
     if @wiki.save
       flash[:notice] = "wiki was saved."
@@ -31,11 +33,9 @@ class WikisController < ApplicationController
 
   def update
     @wiki = Wiki.find(params[:id])
-    authorize @wiki
-    # @wiki.title = params[:wiki][:title]
-    # @wiki.body = params[:wiki][:body]
+    @wiki.assign_attributes(wiki_params)
 
-    if @wiki.update(wiki_params)
+    if @wiki.save
       flash[:notice] = "wiki was updated."
       redirect_to @wiki
     else
@@ -44,12 +44,12 @@ class WikisController < ApplicationController
     end
   end
 
-  def publish
-    @wiki = Wiki.find(params[:id])
-    authorize @wiki, :update?
-    @wiki.publish!
-    redirect_to @wiki
-  end
+  # def publish
+  #   @wiki = Wiki.find(params[:id])
+  #   authorize @wiki, :update?
+  #   @wiki.publish!
+  #   redirect_to @wiki
+  # end
 
   def destroy
     @wiki = Wiki.find(params[:id])
@@ -60,6 +60,27 @@ class WikisController < ApplicationController
     else
       flash.now[:alert] = "There was an error deleting the wiki."
       render :show
+    end
+  end
+
+  def authorize_user
+    unless current_user
+      flash[:alert] = "You must be a user to do that."
+      redirect_to wikis_path
+    end
+  end
+
+  private
+
+  def wiki_params
+    params.require(:wiki).permit(:title, :body)
+  end
+
+  def authorize_user
+    wiki = Wiki.find(params[:id])
+    unless current_user == wiki.user || current_user.admin?
+      flash[:alert] = "You must be the creator of the wiki to do that."
+      redirect_to [wiki]
     end
   end
 end
