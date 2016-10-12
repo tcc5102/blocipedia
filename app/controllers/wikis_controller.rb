@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
   before_action :require_sign_in, except: [:index, :show]
-  # before_action :authorize_user, except: [:index, :show]
+  before_action :authorize_user, except: [:new, :index, :show]
 
   def index
     @wikis = Wiki.all
@@ -63,12 +63,12 @@ class WikisController < ApplicationController
     end
   end
 
-  def authorize_user
-    unless current_user
-      flash[:alert] = "You must be a user to do that."
-      redirect_to wikis_path
-    end
-  end
+  # def authorize_user
+  #   unless current_user
+  #     flash[:alert] = "You must be a user to do that."
+  #     redirect_to wikis_path
+  #   end
+  # end
 
   private
 
