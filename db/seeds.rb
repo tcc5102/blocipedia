@@ -1,43 +1,54 @@
 require 'random_data'
+# Create Users
+10.times do
+  User.create!(
+    name:     Faker::Name.name,
+    email:    Faker::Internet.email,
+    password: Faker::Internet.password,
+    role:     'standard'
+  )
+end
+users = User.all
+
 # Create Wikis
 10.times do
   Wiki.create!(
-    user_id:   1,
-    title:  RandomData.random_sentence,
-    body:   RandomData.random_paragraph
+    user:     users.sample,
+    title:    Faker::Name.title,
+    body:     Faker::Lorem.paragraph
   )
 end
- wikis = Wiki.all
-
-# Create Users
-5.times do
-  User.create!(
-    email:    RandomData.random_email,
-    password: RandomData.random_sentence
-  )
-end
+wikis = Wiki.all
 
 # Create admin user
-admin = User.create!(
+admin = User.new(
   name:     'Admin User',
   email:    'admin@example.com',
   password: 'helloworld',
   role:     'admin'
 )
+admin.skip_confirmation!
+admin.save
 
 # Create a standard user
-standard = User.create!(
+standard = User.new(
   name:     'Standard User',
   email:    'standard@example.com',
-  password: 'helloworld'
+  password: 'helloworld',
+  role:     'standard'
 )
+standard.skip_confirmation!
+standard.save
 
 # Create a premium user
-premium = User.create!(
+premium = User.new(
   name:     'Premium User',
   email:    'premium@example.com',
-  password: 'helloworld'
+  password: 'helloworld',
+  role:     'premium'
 )
+premium.skip_confirmation!
+premium.save
 
 
 

@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
   before_action :require_sign_in, except: [:index, :show]
-  before_action :authorize_user, except: [:index, :show]
+  # before_action :authorize_user, except: [:index, :show]
 
   def index
     @wikis = Wiki.all
@@ -15,7 +15,7 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = wikis.build(wiki_params)
+    @wiki = Wiki.create(wiki_params)
     @wiki.user = current_user
 
     if @wiki.save
