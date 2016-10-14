@@ -41,8 +41,10 @@ gem 'bootstrap-sass'
 gem 'figaro'
 # pry
 gem 'pry'
-#user role authorization
+# user role authorization
 gem 'pundit'
+# payment authorization
+gem 'stripe'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
