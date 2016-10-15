@@ -1,4 +1,6 @@
 class ChargesController < ApplicationController
+  # before_action :upgrade_premium
+
   def create
     # Creates a Stripe Customer object, for associating
     # with the charge
@@ -11,11 +13,12 @@ class ChargesController < ApplicationController
     charge = Stripe::Charge.create(
       customer: customer.id, # Note -- this is NOT the user_id in your app
       amount: 15_00,
-      description: "Premium Membership - #{current_user.email}",
+      description: "Premium Membership",
       currency: 'usd'
     )
 
     flash[:notice] = "You are now a premium member!"
+    current_user.premium!
     redirect_to edit_user_registration_path
 
     # Stripe will send back CardErrors, with friendly messages
@@ -33,4 +36,10 @@ class ChargesController < ApplicationController
       amount: 15_00
     }
   end
+
+  # private
+  #
+  # def upgrade_premium
+  #   current_user.role ||= :premium
+  # end
 end

@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
   has_many :wikis, dependent: :destroy
 
   enum role: [:standard, :premium, :admin]
+
+  def downgrade(user)
+    user.standard!
+  end
 end
