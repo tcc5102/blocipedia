@@ -1,9 +1,10 @@
 class WikisController < ApplicationController
   before_action :require_sign_in, except: [:index, :show]
-  before_action :authorize_user, except: [:new, :index, :show]
+  before_action :authorize_user, except: [:create, :new, :index, :show]
 
   def index
-    @wikis = Wiki.all
+    @public_wikis = Wiki.where(private: false)
+    @private_wikis = Wiki.where(private: true)
   end
 
   def show
@@ -15,8 +16,9 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = Wiki.create(wiki_params)
-    @wiki.user = current_user
+    @user = current_user
+    @wiki = Wiki.new(params.require(:wiki).permit(:title, :body, :private))
+    @wiki.user_id = @user.id
 
     if @wiki.save
       flash[:notice] = "wiki was saved."
@@ -35,7 +37,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
 
-    if @wiki.save
+    if @wiki.update_attributes(params.require(:wiki).permit(:title, :body, :private))
       flash[:notice] = "wiki was updated."
       redirect_to @wiki
     else
@@ -43,13 +45,6 @@ class WikisController < ApplicationController
       render :edit
     end
   end
-
-  # def publish
-  #   @wiki = Wiki.find(params[:id])
-  #   authorize @wiki, :update?
-  #   @wiki.publish!
-  #   redirect_to @wiki
-  # end
 
   def destroy
     @wiki = Wiki.find(params[:id])
@@ -63,24 +58,17 @@ class WikisController < ApplicationController
     end
   end
 
-  # def authorize_user
-  #   unless current_user
-  #     flash[:alert] = "You must be a user to do that."
-  #     redirect_to wikis_path
-  #   end
-  # end
-
   private
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body)
+    params.require(:wiki).permit(:title, :body, :private)
   end
 
   def authorize_user
-    wiki = Wiki.find(params[:id])
-    unless current_user == wiki.user || current_user.admin?
+    @wiki = Wiki.find(params[:id])
+    unless current_user == @wiki.user || current_user.admin?
       flash[:alert] = "You must be the creator of the wiki to do that."
-      redirect_to [wiki]
+      redirect_to @wiki
     end
   end
 end

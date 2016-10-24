@@ -19,7 +19,10 @@
     Logged in as <strong><%= current_user.email %></strong>.
     <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
     <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %> </br></br>
-    <%= link_to "Go to Wikis: Public", wikis_path, :class => 'navbar-link'%>
+    <%= link_to "Go to Wikis", wikis_path, :class => 'navbar-link'%></br>
+    <div align="center">
+      <%= link_to '<button type="button">Create New Wiki</button>'.html_safe, new_wiki_path %>
+    </div>
     <p><b><%= current_user.role %></b></p>
   <% else %>
     <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
