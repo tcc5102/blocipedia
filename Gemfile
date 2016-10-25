@@ -45,6 +45,8 @@ gem 'pry'
 gem 'pundit'
 # payment authorization
 gem 'stripe'
+# redcarpet for markdown processing
+gem 'redcarpet'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
