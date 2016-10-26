@@ -8,7 +8,7 @@
 <div align="right" style="float: right; width: 50%;">
   <h1>Private Wikis</h1>
   <div>
-    <% if current_user.premium? || current_user.admin? %>
+    <% if current_user.premium? || current_user.admin? || current_collaborators(current_user) %>
       <%= render @private_wikis %>
     <% end %>
   </div>

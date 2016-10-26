@@ -1,0 +1,11 @@
+<%= form_for [@wiki, Collaborator.new] do |f| %>
+  <% if current_user.premium? || current_user.admin? %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.collection_select :user_id, new_collaborators(@wiki), :id, :email, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.submit "Save", class: 'btn btn-success' %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,14 +1,27 @@
 <h1 align="center">Edit Wiki</h1>
 
-<div class="row" align="center">
-  <div class="col-md-4">
-    <ul style="list-style: none;">
-      <p>Guidelines for Edits</p>
-      <li>It's cool, add to or change your wiki.</li>
-      <li>Again, make sure the information is factual.</li>
-    </ul>
+  <div class="row" align="center">
+    <div class="col-md-4">
+      <ul style="list-style: none;">
+        <p>Guidelines for Edits</p>
+        <li>It's cool, add to or change your wiki.</li>
+        <li>Again, make sure the information is factual.</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <%= render partial: "form" %>
+    </div>
   </div>
-  <div class="col-md-4">
-    <%= render partial: "form" %>
+
+  <div>
+    <% if current_user.premium? || current_user.admin? %>
+    <h2> Add Collaborator </h2>
+      <div class="col-md-4">
+        <%= render partial: 'collaborators/form', locals: { wiki: @wiki } %>
+      </div>
+    <h2> Remove Collaborator </h2>
+      <div class="col-md-4">
+        <%= render partial: 'collaborators/uncollaborate' %>
+      </div>
+    <% end %>
   </div>
-</div>

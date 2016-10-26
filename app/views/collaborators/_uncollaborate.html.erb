@@ -1,0 +1,4 @@
+<% @wiki.collaborators.each do |collaborator| %>
+  <%= collaborator.user.email %>
+  <%= link_to "Remove", [@wiki, collaborator], method: :delete, class: 'btn btn-danger' %><br />
+<% end %>

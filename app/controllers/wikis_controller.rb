@@ -1,6 +1,7 @@
 class WikisController < ApplicationController
   include ApplicationHelper
-  
+  include CollaboratorsHelper
+
   before_action :require_sign_in, except: [:index, :show]
   before_action :authorize_user, except: [:create, :new, :index, :show]
 
@@ -68,7 +69,7 @@ class WikisController < ApplicationController
 
   def authorize_user
     @wiki = Wiki.find(params[:id])
-    unless current_user == @wiki.user || current_user.admin?
+    unless current_user == @wiki.user || current_user.admin? || current_collaborators(current_user)
       flash[:alert] = "You must be the creator of the wiki to do that."
       redirect_to @wiki
     end
