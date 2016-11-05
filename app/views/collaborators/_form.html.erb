@@ -1,11 +1,10 @@
-<%= form_for [@wiki, Collaborator.new] do |f| %>
-  <% if current_user.premium? || current_user.admin? %>
+<%= form_for [wiki, Collaborator.new] do |f| %>
+
     <div class="form-group">
-      <%= f.label :email %>
-      <%= f.collection_select :user_id, new_collaborators(@wiki), :id, :email, class: 'form-control' %>
+      <%= label_tag :email %>
+      <%= text_field_tag :email %>
     </div>
     <div class="form-group">
-      <%= f.submit "Save", class: 'btn btn-success' %>
+      <%= submit_tag "Save", class: 'btn btn-primary' %>
     </div>
-  <% end %>
 <% end %>
