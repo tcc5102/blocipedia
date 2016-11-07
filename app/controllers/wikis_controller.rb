@@ -6,8 +6,8 @@ class WikisController < ApplicationController
   before_action :authorize_user, except: [:create, :new, :index, :show]
 
   def index
-    @public_wikis = Wiki.where(private: false)
-    @private_wikis = Wiki.where(private: true)
+    @public_wikis = current_user.wikis.where(private: false)
+    @private_wikis = current_user.wikis.where(private: true)
   end
 
   def show
