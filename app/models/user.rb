@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   # before_action :authenticate_user!
   before_save { self.role ||= :standard }
-  # has_many :wikis, through: :collaborators, dependent: :destroy
+  has_many :wikis, through: :collaborators
   has_many :collaborators
 
   enum role: [:standard, :premium, :admin]
