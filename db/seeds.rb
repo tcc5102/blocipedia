@@ -5,7 +5,7 @@ require 'random_data'
     name:     Faker::Name.name,
     email:    Faker::Internet.email,
     # password: Faker::Internet.password,
-    password: 'password'
+    password: 'password',
     role:     'standard'
   )
   User.skip_confirmation!
