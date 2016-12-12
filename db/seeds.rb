@@ -4,9 +4,12 @@ require 'random_data'
   User.create!(
     name:     Faker::Name.name,
     email:    Faker::Internet.email,
-    password: Faker::Internet.password,
+    # password: Faker::Internet.password,
+    password: 'password'
     role:     'standard'
   )
+  User.skip_confirmation!
+  User.save!
 end
 users = User.all
 
