@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Devise for authentication, user sign up
-# gem 'devise'
+gem 'devise'
 # Bootstrap
 gem 'bootstrap-sass'
 # figaro
