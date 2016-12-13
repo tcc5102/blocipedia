@@ -1,15 +1,15 @@
 require 'random_data'
 # Create Users
 10.times do
-  User.create!(
+  user = User.create!(
     name:     Faker::Name.name,
     email:    Faker::Internet.email,
     # password: Faker::Internet.password,
     password: 'password',
     role:     'standard'
   )
-  User.skip_confirmation!
-  User.save!
+  user.skip_confirmation!
+  user.save
 end
 users = User.all
 
